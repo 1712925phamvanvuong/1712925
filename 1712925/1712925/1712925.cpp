@@ -7,89 +7,109 @@
 #include <io.h> 
 struct sinhvien
 {
-	char mssv[20];
+	wchar_t mssv[30];
 	wchar_t hovaten[30];
 	wchar_t khoc[30];
-	char* khoa;
-	char ngaysinh[12];
-	char hinhcanhan[16];
-	wchar_t* motabanthan;
-	wchar_t* sothichx;
+	wchar_t khoa[30];
+	wchar_t ngaysinh[30];
+	wchar_t hinhcanhan[30];
+	wchar_t motabanthan[30];
+	wchar_t sothichx[30];
 };
 
-int token(FILE* f)
+int token(FILE* f, wchar_t h)
 {
-	wchar_t s[20];
+	wchar_t ch;
 	int i = 0;
 	while (!feof(f)){
-		if (s[i] != ','){
-			s[i] = getc(f);
+		ch = fgetwc(f);
+		if (ch != h)
+		{
 			i++;
-
 		}
 		else
-			return fseek(f, 0, SEEK_CUR);
+			return i;
 	}
-	
-	return fseek(f, 0, SEEK_CUR);
+	return i;
 }
 
-void docfile(sinhvien x);
-void docfile(sinhvien x)
+void main()
 {
-	
+	sinhvien x;
+	_setmode(_fileno(stdout), _O_U16TEXT); //needed for output
+	_setmode(_fileno(stdin), _O_U16TEXT); //needed for input
 
-	FILE* fIn = fopen("C:\\Users\Dell\Desktop\Book1.txt", "rb");
+	FILE* fIn;
+	fopen_s(&fIn, "123.txt", "rt");
 	if (fIn == NULL)
 	{
 		printf("khong mo duoc FILE!!!\n");
 	}
 	else
 	{
-		int p = ftell(fIn);
-		int tmp = token(fIn); 
+
+		int a = token(fIn, L',');
+
+		fseek(fIn, 3, SEEK_SET);
+		fgetws(x.mssv, a - 2, fIn);
+		int b = ftell(fIn) + 1;
+		wprintf(L"%ls\n", x.mssv);
 
 
-		fgets(x.mssv, tmp-p, fIn);
-		fseek(fIn, 4, tmp);
+		fseek(fIn, b + 1, SEEK_SET);
+		a = token(fIn, L',');
+		fseek(fIn, b, SEEK_SET);
+		fgetws(x.hovaten, a + 2, fIn);
+		b = ftell(fIn) + 1;
+		wprintf(L"%ls\n", x.hovaten);
 
 
-		p = tmp;
-		tmp = token(fIn);
-		fgetws(x.hovaten, tmp - p, fIn);
-		fseek(fIn, 4, tmp);
-		p = tmp;
-		tmp = token(fIn);
-		fgetws(x.khoc, tmp - p, fIn);
-		fseek(fIn, 4, tmp);
-		p = tmp;
-		tmp = token(fIn);
-		fgets(x.khoa, tmp - p, fIn);
-		fseek(fIn, 4, tmp);
-		p = tmp;
-		tmp = token(fIn);
-		fgets(x.ngaysinh, tmp - p, fIn);
-		fseek(fIn, 4, tmp);
-		p = tmp;
-		tmp = token(fIn);
-		fgets(x.hinhcanhan, tmp - p, fIn);
-		fseek(fIn, 4, tmp);
-		p = tmp;
-		tmp = token(fIn);
-		fgetws(x.motabanthan, tmp - p, fIn);
-		fseek(fIn, 4, tmp);
-		wchar_t last = fseek(fIn, 0, SEEK_END);
-		fgetws(x.sothichx, last - tmp, fIn);
+		fseek(fIn, b + 1, SEEK_SET);
+		a = token(fIn, L',');
+		fseek(fIn, b, SEEK_SET);
+		fgetws(x.khoa, a + 2, fIn);
+		b = ftell(fIn) + 1;
+		wprintf(L"%ls\n", x.khoa);
+
+		fseek(fIn, b + 1, SEEK_SET);
+		a = token(fIn, L',');
+		fseek(fIn, b, SEEK_SET);
+		fgetws(x.khoc, a + 2, fIn);
+		b = ftell(fIn) + 1;
+		wprintf(L"%ls\n", x.khoc);
+
+		fseek(fIn, b + 1, SEEK_SET);
+		a = token(fIn, L',');
+		fseek(fIn, b, SEEK_SET);
+		fgetws(x.ngaysinh, a + 2, fIn);
+		b = ftell(fIn) + 1;
+		wprintf(L"%ls\n", x.ngaysinh);
+
+		fseek(fIn, b + 1, SEEK_SET);
+		a = token(fIn, L',');
+		fseek(fIn, b, SEEK_SET);
+		fgetws(x.hinhcanhan, a + 2, fIn);
+		b = ftell(fIn) + 1;
+		wprintf(L"%ls\n", x.hinhcanhan);
+
+		fseek(fIn, b + 1, SEEK_SET);
+		a = token(fIn, L',');
+		fseek(fIn, b, SEEK_SET);
+		fgetws(x.motabanthan, a + 2, fIn);
+		b = ftell(fIn) + 1;
+		wprintf(L"%ls\n", x.motabanthan);
+
+		if (fgetwc(fIn) == L',')
+		{
+			fseek(fIn, b + 1, SEEK_SET);
+			a = token(fIn, NULL);
+			fseek(fIn, b, SEEK_SET);
+			fgetws(x.sothichx, 100, fIn);
+			wprintf(L"%ls\n", x.sothichx);
+		}
 	}
 	fclose(fIn);
-}
 
-void main()
-{
-	_setmode(_fileno(stdout), _O_U16TEXT); //needed for output
-	_setmode(_fileno(stdin), _O_U16TEXT); //needed for input
-	sinhvien x;
-	docfile(x);
-	printf("%ls", x.mssv);
-	getch();
+
+	_getch();
 }
