@@ -67,6 +67,37 @@ int finding(FILE* f, wchar_t s[])
 	}
 	return -1;
 }
+int findlen(FILE* f, int pos, wchar_t x)
+{
+	int i = 0;
+	while (fgetwc(f) != x)
+	{
+		i++;
+	}
+	return i - 1;
+}
+
+void replace(FILE* f, wchar_t s[], int pos, wchar_t x)
+{
+	if (findlen(f, pos, x) > len(s))
+	{
+		fseek(f, pos + 1, SEEK_SET);
+		while (fgetwc(f) != L'-')
+			fputwc(L' ', f);
+		fseek(f, pos + 1, SEEK_SET);
+		fputws(s, f);
+	}
+	else
+	{
+		wchar_t tmp[1000];
+		fseek(f, findlen(f, pos, x) + pos, SEEK_SET);
+		fgetws(tmp, 1000, f);
+		wprintf(L"%ls", tmp);
+		fseek(f, pos, SEEK_SET);
+		fputws(s, f);
+		fputws(tmp, f);
+	}
+}
 
 
 
@@ -144,6 +175,7 @@ void doc(FILE* fIn, sinhvien &x, int &begin)
 
 	begin = ftell(fIn);
 }
+
 
 void main()
 {
