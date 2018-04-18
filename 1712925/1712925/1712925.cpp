@@ -174,6 +174,15 @@ void doc(FILE* fIn, sinhvien &x, int &begin)
 
 
 	begin = ftell(fIn);
+	free(x.mssv);
+	free(x.hovaten);
+	free(x.khoa);
+	free(x.khoc);
+	free(x.ngaysinh);
+	free(x.hinhcanhan);
+	free(x.mail);
+	free(x.motabanthan);
+	free(x.sothichx);
 }
 
 
@@ -198,15 +207,6 @@ void main()
 			x = (sinhvien*)malloc(sizeof(sinhvien)*i);
 			doc(fIn, x[i - 1], begin);
 			fgetwc(fIn);
-		}
-		for (int j = 0; j < i; j++){
-			free(x[j].mssv);
-			free(x[j].hovaten);
-			free(x[j].khoa);
-			free(x[j].khoc);
-			free(x[j].ngaysinh);
-			free(x[j].motabanthan);
-			free(x[j].sothichx);
 		}
 		free(x);
 		fclose(fIn);
