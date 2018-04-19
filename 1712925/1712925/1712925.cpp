@@ -79,24 +79,28 @@ int findlen(FILE* f, int pos, wchar_t x)
 
 void replace(FILE* f, wchar_t s[], int pos, wchar_t x)
 {
-	if (findlen(f, pos, x) > len(s))
-	{
-		fseek(f, pos + 1, SEEK_SET);
-		while (fgetwc(f) != L'-')
+	int k = findlen(f, pos, x), length = len(s);
+	if (k >= len(s)){
+		fseek(f, pos + 2, SEEK_SET);
+		for (int i = 0; i < k + 4; i++){
 			fputwc(L' ', f);
+		}
+
 		fseek(f, pos + 1, SEEK_SET);
 		fputws(s, f);
 	}
-	else
-	{
-		wchar_t tmp[1000];
-		fseek(f, findlen(f, pos, x) + pos, SEEK_SET);
-		fgetws(tmp, 1000, f);
-		wprintf(L"%ls", tmp);
-		fseek(f, pos, SEEK_SET);
+	else{
+		int t = findlen(f, pos + k, L'>');
+		wchar_t* tmp = (wchar_t*)malloc(sizeof(wchar_t)*t);
+		fseek(f, pos + k + 1, SEEK_SET);
+		fgetws(tmp, t, f);
+
+		fseek(f, pos + 1, SEEK_SET);
 		fputws(s, f);
 		fputws(tmp, f);
+		free(tmp);
 	}
+
 }
 
 
@@ -207,8 +211,6 @@ void doc(FILE* fIn, sinhvien &x, int &begin)
 			fgetws(x.sothichx, a, fIn);
 
 			b = ftell(fIn) + 1;
-			fgetwc(fIn);
-			fgetwc(fIn);
 
 		}
 		wprintf(L"%ls\n\n", x.sothichx);
