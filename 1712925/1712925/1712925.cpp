@@ -18,32 +18,7 @@ struct sinhvien
 	wchar_t* motabanthan;
 	wchar_t* sothichx;
 };
-
-int len(wchar_t s[])
-{
-	int i = 0;
-	while (s[i] != '\0'){
-		i++;
-	}
-	return i;
-}
-
-int token(FILE* f, wchar_t h)
-{
-	wchar_t ch;
-	int i = 0;
-	while (!feof(f)){
-		ch = fgetwc(f);
-		if (ch != h)
-		{
-			i++;
-		}
-		else
-			return i+1;
-	}
-	return i;
-}
-int finding(FILE* f, wchar_t s[])
+/* int finding(FILE* f, wchar_t s[])
 {
 	int j, pos = 0;
 	while (!feof(f)){
@@ -101,9 +76,24 @@ void replace(FILE* f, wchar_t s[], int pos, wchar_t x)
 		free(tmp);
 	}
 
+}*/
+int token(FILE* f, wchar_t h);
+int token(FILE* f, wchar_t h)
+{
+	wchar_t ch;
+	int i = 0;
+	while (!feof(f)){
+		ch = fgetwc(f);
+		if (ch != h)
+		{
+			i++;
+		}
+		else
+			return i + 1;
+	}
+	return i;
 }
-
-
+void doc(FILE* fIn, sinhvien &x, int &begin);
 void doc(FILE* fIn, sinhvien &x, int &begin)
 {
 	fseek(fIn, begin, SEEK_SET);
@@ -220,10 +210,142 @@ void doc(FILE* fIn, sinhvien &x, int &begin)
 		begin = b;
 	}
 }
-
-
-
-
+int len(wchar_t s[]);
+int len(wchar_t s[])
+{
+	int i = 0;
+	while (s[i] != '\0'){
+		i++;
+	}
+	return i;
+}
+wchar_t* themChuoi(wchar_t* cha, wchar_t* con);
+wchar_t* themChuoi(wchar_t* cha, wchar_t* con)
+{
+	int a = len(cha), b = len(con);
+	wchar_t* tm = (wchar_t*)malloc(sizeof(wchar_t)*(a + b));
+	for (int i = 0; i < a - 1; i++)
+		tm[i] = cha[i];
+	for (int i = 0; i < b; i++)
+		tm[i + a - 1] = con[i];
+	return tm;
+}
+wchar_t* xoachuoi(wchar_t s[]);
+wchar_t* xoachuoi(wchar_t s[])
+{
+	for (int i = 0; i < len(s); i++)
+	{
+		s[i] = NULL;
+	}
+	return s;
+}
+void ghifile(sinhvien &x);
+void ghifile(sinhvien &x)
+{
+	wchar_t filename[60];
+	themChuoi(filename, x.mssv);
+	themChuoi(filename, L"html");
+	FILE* f;
+	_wfopen_s(&f, filename, L"wt,ccs=UTF-8");
+	_setmode(_fileno(f), _O_U8TEXT);
+	if (f == NULL)
+	{
+		wprintf(L"Tạo file lỗi!!!\n");
+	}
+	else
+	{
+		fwprintf(f, L"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
+		fwprintf(f, L"<html xmlns=\"http://www.w3.org/1999/xhtml\">\n");
+		fwprintf(f, L"	<head>\n");
+		fwprintf(f, L"		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n");
+		fwprintf(f, L"		<link rel=\"stylesheet\" type=\"text/css\" href=\"personal.css\" />\n");
+		fwprintf(f, L"		<title>HCMUS - %ls</title>\n", x.hovaten);
+		fwprintf(f, L"	</head>\n");
+		fwprintf(f, L"	<body>\n");
+		fwprintf(f, L"		<div class=\"Layout_container\">\n");
+		fwprintf(f, L"			<!-- Begin Layout Banner Region -->\n");
+		fwprintf(f, L"			<div class=\"Layout_Banner\" >\n");
+		fwprintf(f, L"				<div><img id=\"logo\" src=\"Images/logo.jpg\" height=\"105\" /></div>\n");
+		fwprintf(f, L"				<div class=\"Header_Title\">TRƯỜNG ÐẠI HỌC KHOA HỌC TỰ NHIÊN</div>\n");
+		fwprintf(f, L"			</div>\n");
+		fwprintf(f, L"			<!-- End Layout Banner Region -->\n");
+		fwprintf(f, L"			<!-- Begin Layout MainContents Region -->\n");
+		fwprintf(f, L"			<div class=\"Layout_MainContents\">\n");
+		fwprintf(f, L"				<!-- Begin Below Banner Region -->\n");
+		fwprintf(f, L"				<div class=\"Personal_Main_Information\">\n");
+		fwprintf(f, L"					<!-- Begin Thông tin cá nhân của sinh viên ------------------------------------------------------------------------------------------->\n");
+		fwprintf(f, L"					<div class=\"Personal_Location\"> \n");
+		fwprintf(f, L"						<img src=\"Images/LogoFooter.jpg\" width=\"27\" height=\"33\" />\n");
+		fwprintf(f, L"						<span class=\"Personal_FullName\">%ls - %ls</span>\n", x.hovaten, x.mssv);
+		fwprintf(f, L"						<div class=\"Personal_Department\">%ls</div>\n", x.khoa);
+		fwprintf(f, L"						<br />\n");
+		fwprintf(f, L"						<div class=\"Personal_Phone\">\n");
+		fwprintf(f, L"						Email: %ls\n", x.mail);
+		fwprintf(f, L"						</div>\n");
+		fwprintf(f, L"						<br />\n");
+		fwprintf(f, L"						<br />\n");
+		fwprintf(f, L"					</div>\n");
+		fwprintf(f, L"					<!-- End Thông tin cá nhân của sinh viên ------------------------------------------------------------------------------------------->\n");
+		fwprintf(f, L"					<div class=\"Personal_HinhcanhanKhung\">\n");
+		fwprintf(f, L"						<img src=\"Images/%ls\" class=\"Personal_Hinhcanhan\" />\n", x.hinhcanhan);
+		fwprintf(f, L"					</div>\n");
+		fwprintf(f, L"				</div>\n");
+		fwprintf(f, L"				<!-- End Below Banner Region -->\n");
+		fwprintf(f, L"				<!-- Begin MainContents Region -->\n");
+		fwprintf(f, L"				<div class=\"MainContain\">\n");
+		fwprintf(f, L"\n");
+		fwprintf(f, L"					<!-- Begin Top Region -->\n");
+		fwprintf(f, L"					<div class=\"MainContain_Top\">\n");
+		fwprintf(f, L"\n");
+		fwprintf(f, L"						<div class=\"InfoGroup\">Thông tin cá nhân</div>\n");
+		fwprintf(f, L"                       <div>\n");
+		fwprintf(f, L"                            <ul class=\"TextInList\">\n");
+		fwprintf(f, L"                              <li>Họ và tên: %ls </li>\n", x.hovaten);
+		fwprintf(f, L"								 <li>MSSV: %ls </li>\n", x.mssv);
+		fwprintf(f, L"								 <li>Sinh viên khoa: %ls </li>\n", x.khoa);
+		fwprintf(f, L"								 <li>Khoa Hoc: %ls </li>\n", x.khoc);
+		fwprintf(f, L"								 <li>Ngày sinh: %ls </li>\n", x.ngaysinh);
+		fwprintf(f, L"								 <li>Email: %ls </li>\n", x.mail);
+		fwprintf(f, L"							 </ul>\n");
+		fwprintf(f, L"						</div>\n");
+		fwprintf(f, L"                       <div class=\"InfoGroup\">Sở thích</div>\n");
+		fwprintf(f, L"                       <div>\n");
+		fwprintf(f, L"                            <ul class=\"TextInList\">\n");
+		fwprintf(f, L"                              <li>%ls</li>\n", x.sothichx);
+		fwprintf(f, L"							 </ul>\n");
+		fwprintf(f, L"						</div>\n");
+		fwprintf(f, L"						<div class=\"InfoGroup\">Mô tả bản thân</div>\n");
+		fwprintf(f, L"						<div>\n");
+		fwprintf(f, L"							<ul class=\"Description\">\n");
+		fwprintf(f, L"                            <li>%ls</li>\n", x.motabanthan);
+		fwprintf(f, L"							</ul>\n");
+		fwprintf(f, L"						</div>\n");
+		fwprintf(f, L"\n");
+		fwprintf(f, L"					</div>\n");
+		fwprintf(f, L"				</div>\n");
+		fwprintf(f, L"			</div>\n");
+		fwprintf(f, L"\n");
+		fwprintf(f, L"			<!-- Begin Layout Footer -->\n");
+		fwprintf(f, L"			<div class=\"Layout_Footer\">\n");
+		fwprintf(f, L"				<div class=\"divCopyright\">\n");
+		fwprintf(f, L"					<br />\n");
+		fwprintf(f, L"					<img src=\"Images/LogoFooter_gray.jpg\" width=\"34\" height=\"41\" /><br />\n");
+		fwprintf(f, L"					<br />\n");
+		fwprintf(f, L"				@2018</br>\n");
+		fwprintf(f, L"				Ðồ án giữa kì</br>\n");
+		fwprintf(f, L"				Kĩ thuật lập trình</br>\n");
+		fwprintf(f, L"				TH2018/04</br>\n");
+		fwprintf(f, L"				1712925 - phạm văn vương</br>\n");
+		fwprintf(f, L"				</div>\n");
+		fwprintf(f, L"			</div>\n");
+		fwprintf(f, L"			<!-- End Layout Footer -->\n");
+		fwprintf(f, L"		</div>\n");
+		fwprintf(f, L"	</body>\n");
+		fwprintf(f, L"</html>");
+		xoachuoi(filename);
+		fclose(f);
+	}
+}
 void main()
 {
 
@@ -243,6 +365,7 @@ void main()
 		while (!feof(fIn)){
 			i++;
 			doc(fIn, x[i - 1], begin);
+			ghifile(x[i - 1]);
 
 		}
 		free(x);
