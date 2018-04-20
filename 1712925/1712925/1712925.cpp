@@ -151,13 +151,13 @@ void doc(FILE* fIn, sinhvien &x, int &begin)
 	wprintf(L"%ls\n", x.hinhcanhan);
 
 
-	fseek(fIn, b + 1, SEEK_SET);
+	/*fseek(fIn, b + 1, SEEK_SET);
 	a = token(fIn, L',');
 	x.mail = (wchar_t*)malloc(sizeof(wchar_t)*a);
 	fseek(fIn, b + 1, SEEK_SET);
 	fgetws(x.mail, a, fIn);
 	b = ftell(fIn);
-	wprintf(L"%ls\n", x.mail);
+	wprintf(L"%ls\n", x.mail);*/
 
 
 
@@ -226,25 +226,17 @@ wchar_t* themChuoi(wchar_t* cha, wchar_t* con)
 	wchar_t* tm = (wchar_t*)malloc(sizeof(wchar_t)*(a + b));
 	for (int i = 0; i < a - 1; i++)
 		tm[i] = cha[i];
-	for (int i = 0; i < b; i++)
+	for (int i = 0; i <= b; i++)
 		tm[i + a - 1] = con[i];
+	
 	return tm;
 }
-wchar_t* xoachuoi(wchar_t s[]);
-wchar_t* xoachuoi(wchar_t s[])
-{
-	for (int i = 0; i < len(s); i++)
-	{
-		s[i] = NULL;
-	}
-	return s;
-}
+
 void ghifile(sinhvien &x);
 void ghifile(sinhvien &x)
 {
-	wchar_t filename[60];
-	themChuoi(filename, x.mssv);
-	themChuoi(filename, L"html");
+	wchar_t* filename;
+	filename = themChuoi(x.mssv, L".html");
 	FILE* f;
 	_wfopen_s(&f, filename, L"wt,ccs=UTF-8");
 	_setmode(_fileno(f), _O_U8TEXT);
@@ -280,7 +272,7 @@ void ghifile(sinhvien &x)
 		fwprintf(f, L"						<div class=\"Personal_Department\">%ls</div>\n", x.khoa);
 		fwprintf(f, L"						<br />\n");
 		fwprintf(f, L"						<div class=\"Personal_Phone\">\n");
-		fwprintf(f, L"						Email: %ls\n", x.mail);
+		fwprintf(f, L"						Email: \n");
 		fwprintf(f, L"						</div>\n");
 		fwprintf(f, L"						<br />\n");
 		fwprintf(f, L"						<br />\n");
@@ -305,7 +297,6 @@ void ghifile(sinhvien &x)
 		fwprintf(f, L"								 <li>Sinh viên khoa: %ls </li>\n", x.khoa);
 		fwprintf(f, L"								 <li>Khoa Hoc: %ls </li>\n", x.khoc);
 		fwprintf(f, L"								 <li>Ngày sinh: %ls </li>\n", x.ngaysinh);
-		fwprintf(f, L"								 <li>Email: %ls </li>\n", x.mail);
 		fwprintf(f, L"							 </ul>\n");
 		fwprintf(f, L"						</div>\n");
 		fwprintf(f, L"                       <div class=\"InfoGroup\">Sở thích</div>\n");
@@ -342,7 +333,6 @@ void ghifile(sinhvien &x)
 		fwprintf(f, L"		</div>\n");
 		fwprintf(f, L"	</body>\n");
 		fwprintf(f, L"</html>");
-		xoachuoi(filename);
 		fclose(f);
 	}
 }
@@ -361,7 +351,7 @@ void main()
 	{
 		int i = 0, begin = 3;
 		sinhvien* x;
-		x = (sinhvien*)malloc(sizeof(sinhvien)* 11);
+		x = (sinhvien*)malloc(sizeof(sinhvien)* 12);
 		while (!feof(fIn)){
 			i++;
 			doc(fIn, x[i - 1], begin);
