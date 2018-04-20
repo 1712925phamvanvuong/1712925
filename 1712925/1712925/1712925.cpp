@@ -242,8 +242,8 @@ void main()
 		x = (sinhvien*)malloc(sizeof(sinhvien)* 11);
 		while (!feof(fIn)){
 			i++;
-
 			doc(fIn, x[i - 1], begin);
+
 		}
 		free(x);
 		fclose(fIn);
