@@ -18,65 +18,6 @@ struct sinhvien
 	wchar_t* motabanthan;
 	wchar_t* sothichx;
 };
-/* int finding(FILE* f, wchar_t s[])
-{
-	int j, pos = 0;
-	while (!feof(f)){
-		j = 0;
-		fseek(f, pos, SEEK_SET);
-		for (int i = 0; i < len(s); i++){
-			if (fgetwc(f) == s[i]){
-				j++;
-			}
-			else{
-				break;
-			}
-		}
-		if (j == len(s) - 1){
-			return ftell(f);
-		}
-		else{
-			fseek(f, pos + 1, SEEK_SET);
-		}
-		pos++;
-	}
-	return -1;
-}
-int findlen(FILE* f, int pos, wchar_t x)
-{
-	int i = 0;
-	while (fgetwc(f) != x)
-	{
-		i++;
-	}
-	return i - 1;
-}
-
-void replace(FILE* f, wchar_t s[], int pos, wchar_t x)
-{
-	int k = findlen(f, pos, x), length = len(s);
-	if (k >= len(s)){
-		fseek(f, pos + 2, SEEK_SET);
-		for (int i = 0; i < k + 4; i++){
-			fputwc(L' ', f);
-		}
-
-		fseek(f, pos + 1, SEEK_SET);
-		fputws(s, f);
-	}
-	else{
-		int t = findlen(f, pos + k, L'>');
-		wchar_t* tmp = (wchar_t*)malloc(sizeof(wchar_t)*t);
-		fseek(f, pos + k + 1, SEEK_SET);
-		fgetws(tmp, t, f);
-
-		fseek(f, pos + 1, SEEK_SET);
-		fputws(s, f);
-		fputws(tmp, f);
-		free(tmp);
-	}
-
-}*/
 int token(FILE* f, wchar_t h);
 int token(FILE* f, wchar_t h)
 {
@@ -93,92 +34,82 @@ int token(FILE* f, wchar_t h)
 	}
 	return i;
 }
-void doc(FILE* fIn, sinhvien &x, int &begin);
-void doc(FILE* fIn, sinhvien &x, int &begin)
+void doc(FILE* fIn, sinhvien *x, int &begin);
+void doc(FILE* fIn, sinhvien *x, int &begin)
 {
 	fseek(fIn, begin, SEEK_SET);
 	int a = token(fIn, L',');
-	x.mssv = (wchar_t*)malloc(sizeof(wchar_t)*a);
+	x->mssv = (wchar_t*)malloc(sizeof(wchar_t)*a);
 	fseek(fIn, begin, SEEK_SET);
-	fgetws(x.mssv, a, fIn);
+	fgetws(x->mssv, a, fIn);
 	int b = ftell(fIn);
-	wprintf(L"%ls\n", x.mssv);
+	wprintf(L"%ls\n", x->mssv);
 
 
 
 	fseek(fIn, b + 1, SEEK_SET);
 	a = token(fIn, L',');
-	x.hovaten = (wchar_t*)malloc(sizeof(wchar_t)*a);
+	x->hovaten = (wchar_t*)malloc(sizeof(wchar_t)*a);
 	fseek(fIn, b + 1, SEEK_SET);
-	fgetws(x.hovaten, a, fIn);
+	fgetws(x->hovaten, a, fIn);
 	b = ftell(fIn);
-	wprintf(L"%ls\n", x.hovaten);
+	wprintf(L"%ls\n", x->hovaten);
 
 
 	fseek(fIn, b + 1, SEEK_SET);
 	a = token(fIn, L',');
-	x.khoa = (wchar_t*)malloc(sizeof(wchar_t)*a);
+	x->khoa = (wchar_t*)malloc(sizeof(wchar_t)*a);
 	fseek(fIn, b + 1, SEEK_SET);
-	fgetws(x.khoa, a, fIn);
+	fgetws(x->khoa, a, fIn);
 	b = ftell(fIn);
-	wprintf(L"%ls\n", x.khoa);
+	wprintf(L"%ls\n", x->khoa);
 
 
 	fseek(fIn, b + 1, SEEK_SET);
 	a = token(fIn, L',');
-	x.khoc = (wchar_t*)malloc(sizeof(wchar_t)*a);
+	x->khoc = (wchar_t*)malloc(sizeof(wchar_t)*a);
 	fseek(fIn, b + 1, SEEK_SET);
-	fgetws(x.khoc, a, fIn);
+	fgetws(x->khoc, a, fIn);
 	b = ftell(fIn);
-	wprintf(L"%ls\n", x.khoc);
+	wprintf(L"%ls\n", x->khoc);
 
 
 	fseek(fIn, b + 1, SEEK_SET);
 	a = token(fIn, L',');
-	x.ngaysinh = (wchar_t*)malloc(sizeof(wchar_t)*a);
+	x->ngaysinh = (wchar_t*)malloc(sizeof(wchar_t)*a);
 	fseek(fIn, b + 1, SEEK_SET);
-	fgetws(x.ngaysinh, a, fIn);
+	fgetws(x->ngaysinh, a, fIn);
 	b = ftell(fIn);
-	wprintf(L"%ls\n", x.ngaysinh);
+	wprintf(L"%ls\n", x->ngaysinh);
 
 
 	fseek(fIn, b + 1, SEEK_SET);
 	a = token(fIn, L',');
-	x.hinhcanhan = (wchar_t*)malloc(sizeof(wchar_t)*a);
+	x->hinhcanhan = (wchar_t*)malloc(sizeof(wchar_t)*a);
 	fseek(fIn, b + 1, SEEK_SET);
-	fgetws(x.hinhcanhan, a, fIn);
+	fgetws(x->hinhcanhan, a, fIn);
 	b = ftell(fIn);
-	wprintf(L"%ls\n", x.hinhcanhan);
-
-
-	/*fseek(fIn, b + 1, SEEK_SET);
-	a = token(fIn, L',');
-	x.mail = (wchar_t*)malloc(sizeof(wchar_t)*a);
-	fseek(fIn, b + 1, SEEK_SET);
-	fgetws(x.mail, a, fIn);
-	b = ftell(fIn);
-	wprintf(L"%ls\n", x.mail);*/
-
+	wprintf(L"%ls\n", x->hinhcanhan);
 
 
 	fseek(fIn, b + 1, SEEK_SET);
 	if (fgetwc(fIn) != L'"'){
 		fseek(fIn, b + 1, SEEK_SET);
 		a = token(fIn, L',');
-		x.motabanthan = (wchar_t*)malloc(sizeof(wchar_t)*a);
+		x->motabanthan = (wchar_t*)malloc(sizeof(wchar_t)*a);
 		fseek(fIn, b + 1, SEEK_SET);
-		fgetws(x.motabanthan, a, fIn);
+		fgetws(x->motabanthan, a, fIn);
 		b = ftell(fIn);
 	}
 	else{
 		fseek(fIn, b + 2, SEEK_SET);
 		a = token(fIn, L'"');
-		x.motabanthan = (wchar_t*)malloc(sizeof(wchar_t)*a);
+		x->motabanthan = (wchar_t*)malloc(sizeof(wchar_t)*a);
 		fseek(fIn, b + 2, SEEK_SET);
-		fgetws(x.motabanthan, a, fIn);
+		fgetws(x->motabanthan, a, fIn);
 		b = ftell(fIn) + 1;
 	}
-	wprintf(L"%ls\n", x.motabanthan);
+	wprintf(L"%ls\n", x->motabanthan);
 
 
 
@@ -187,23 +118,23 @@ void doc(FILE* fIn, sinhvien &x, int &begin)
 		if (fgetwc(fIn) != L'"'){
 			fseek(fIn, b + 1, SEEK_SET);
 			a = token(fIn, '\n');
-			x.sothichx = (wchar_t*)malloc(sizeof(wchar_t)*a);
+			x->sothichx = (wchar_t*)malloc(sizeof(wchar_t)*a);
 			fseek(fIn, b + 1, SEEK_SET);
-			fgetws(x.sothichx, a, fIn);
+			fgetws(x->sothichx, a, fIn);
 			b = ftell(fIn);
 			begin = b;
 		}
 		else{
 			fseek(fIn, b + 2, SEEK_SET);
 			a = token(fIn, '"');
-			x.sothichx = (wchar_t*)malloc(sizeof(wchar_t)*a);
+			x->sothichx = (wchar_t*)malloc(sizeof(wchar_t)*a);
 			fseek(fIn, b + 2, SEEK_SET);
-			fgetws(x.sothichx, a, fIn);
+			fgetws(x->sothichx, a, fIn);
 
 			b = ftell(fIn) + 1;
 
 		}
-		wprintf(L"%ls\n\n", x.sothichx);
+		wprintf(L"%ls\n\n", x->sothichx);
 		begin = b + 2;
 	}
 	else{
@@ -219,24 +150,40 @@ int len(wchar_t s[])
 	}
 	return i;
 }
-wchar_t* themChuoi(wchar_t* cha, wchar_t* con);
-wchar_t* themChuoi(wchar_t* cha, wchar_t* con)
+void saochepchuoi(wchar_t* str, wchar_t* s);
+void saochepchuoi(wchar_t* str, wchar_t* s)
 {
-	int a = len(cha), b = len(con);
-	wchar_t* tm = (wchar_t*)malloc(sizeof(wchar_t)*(a + b));
-	for (int i = 0; i < a - 1; i++)
-		tm[i] = cha[i];
-	for (int i = 0; i <= b; i++)
-		tm[i + a - 1] = con[i];
-	
-	return tm;
+	int a = len(s);
+	for (int i = 0; i < a; i++)
+	{
+		str[i] = s[i];
+	}
+	str[a] = '\0';
 }
-
-void ghifile(sinhvien &x);
-void ghifile(sinhvien &x)
+void ghepchuoi(wchar_t* str, wchar_t* s);
+void ghepchuoi(wchar_t* str, wchar_t* s)
+{ 
+	int a = len(str);
+	int m = len(str) + len(s);
+	for (int i = 0; i < m; i++)
+	{
+		if (i == a)
+		{
+			for (int j = 0; j < len(s); j++)
+			{
+				str[i] = s[j];
+				i++;
+			}
+		}
+	}
+	str[m] = '\0';
+}
+void ghifile(sinhvien* x);
+void ghifile(sinhvien* x)
 {
-	wchar_t* filename;
-	filename = themChuoi(x.mssv, L".html");
+	wchar_t filename[50];
+	saochepchuoi(filename, x->mssv);
+	ghepchuoi(filename, L".html");
 	FILE* f;
 	_wfopen_s(&f, filename, L"wt,ccs=UTF-8");
 	_setmode(_fileno(f), _O_U8TEXT);
@@ -251,7 +198,7 @@ void ghifile(sinhvien &x)
 		fwprintf(f, L"	<head>\n");
 		fwprintf(f, L"		<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n");
 		fwprintf(f, L"		<link rel=\"stylesheet\" type=\"text/css\" href=\"personal.css\" />\n");
-		fwprintf(f, L"		<title>HCMUS - %ls</title>\n", x.hovaten);
+		fwprintf(f, L"		<title>HCMUS - %ls</title>\n", x->hovaten);
 		fwprintf(f, L"	</head>\n");
 		fwprintf(f, L"	<body>\n");
 		fwprintf(f, L"		<div class=\"Layout_container\">\n");
@@ -268,8 +215,8 @@ void ghifile(sinhvien &x)
 		fwprintf(f, L"					<!-- Begin Thông tin cá nhân của sinh viên ------------------------------------------------------------------------------------------->\n");
 		fwprintf(f, L"					<div class=\"Personal_Location\"> \n");
 		fwprintf(f, L"						<img src=\"Images/LogoFooter.jpg\" width=\"27\" height=\"33\" />\n");
-		fwprintf(f, L"						<span class=\"Personal_FullName\">%ls - %ls</span>\n", x.hovaten, x.mssv);
-		fwprintf(f, L"						<div class=\"Personal_Department\">%ls</div>\n", x.khoa);
+		fwprintf(f, L"						<span class=\"Personal_FullName\">%ls - %ls</span>\n", x->hovaten, x->mssv);
+		fwprintf(f, L"						<div class=\"Personal_Department\">%ls</div>\n", x->khoa);
 		fwprintf(f, L"						<br />\n");
 		fwprintf(f, L"						<div class=\"Personal_Phone\">\n");
 		fwprintf(f, L"						Email: \n");
@@ -279,7 +226,7 @@ void ghifile(sinhvien &x)
 		fwprintf(f, L"					</div>\n");
 		fwprintf(f, L"					<!-- End Thông tin cá nhân của sinh viên ------------------------------------------------------------------------------------------->\n");
 		fwprintf(f, L"					<div class=\"Personal_HinhcanhanKhung\">\n");
-		fwprintf(f, L"						<img src=\"Images/%ls\" class=\"Personal_Hinhcanhan\" />\n", x.hinhcanhan);
+		fwprintf(f, L"						<img src=\"Images/%ls\" class=\"Personal_Hinhcanhan\" />\n", x->hinhcanhan);
 		fwprintf(f, L"					</div>\n");
 		fwprintf(f, L"				</div>\n");
 		fwprintf(f, L"				<!-- End Below Banner Region -->\n");
@@ -292,23 +239,23 @@ void ghifile(sinhvien &x)
 		fwprintf(f, L"						<div class=\"InfoGroup\">Thông tin cá nhân</div>\n");
 		fwprintf(f, L"                       <div>\n");
 		fwprintf(f, L"                            <ul class=\"TextInList\">\n");
-		fwprintf(f, L"                              <li>Họ và tên: %ls </li>\n", x.hovaten);
-		fwprintf(f, L"								 <li>MSSV: %ls </li>\n", x.mssv);
-		fwprintf(f, L"								 <li>Sinh viên khoa: %ls </li>\n", x.khoa);
-		fwprintf(f, L"								 <li>Khoa Hoc: %ls </li>\n", x.khoc);
-		fwprintf(f, L"								 <li>Ngày sinh: %ls </li>\n", x.ngaysinh);
+		fwprintf(f, L"                              <li>Họ và tên: %ls </li>\n", x->hovaten);
+		fwprintf(f, L"								 <li>MSSV: %ls </li>\n", x->mssv);
+		fwprintf(f, L"								 <li>Sinh viên khoa: %ls </li>\n", x->khoa);
+		fwprintf(f, L"								 <li>Khóa Hoc: %ls </li>\n", x->khoc);
+		fwprintf(f, L"								 <li>Ngày sinh: %ls </li>\n", x->ngaysinh);
 		fwprintf(f, L"							 </ul>\n");
 		fwprintf(f, L"						</div>\n");
 		fwprintf(f, L"                       <div class=\"InfoGroup\">Sở thích</div>\n");
 		fwprintf(f, L"                       <div>\n");
 		fwprintf(f, L"                            <ul class=\"TextInList\">\n");
-		fwprintf(f, L"                              <li>%ls</li>\n", x.sothichx);
+		fwprintf(f, L"                              <li>%ls</li>\n", x->sothichx);
 		fwprintf(f, L"							 </ul>\n");
 		fwprintf(f, L"						</div>\n");
 		fwprintf(f, L"						<div class=\"InfoGroup\">Mô tả bản thân</div>\n");
 		fwprintf(f, L"						<div>\n");
 		fwprintf(f, L"							<ul class=\"Description\">\n");
-		fwprintf(f, L"                            <li>%ls</li>\n", x.motabanthan);
+		fwprintf(f, L"                            <li>%ls</li>\n", x->motabanthan);
 		fwprintf(f, L"							</ul>\n");
 		fwprintf(f, L"						</div>\n");
 		fwprintf(f, L"\n");
@@ -342,20 +289,27 @@ void main()
 	_setmode(_fileno(stdout), _O_U16TEXT); //needed for output
 	_setmode(_fileno(stdin), _O_U16TEXT); //needed for input
 	FILE* fIn;
-	_wfopen_s(&fIn, L"ds.csv", L"r, ccs=UTF-8");
+	_wfopen_s(&fIn, L"ThongTin.csv", L"r, ccs=UTF-8");
 	if (fIn == NULL)
 	{
 		wprintf(L"Không mở được FILE!!!\n");
 	}
 	else
 	{
-		int i = 0, begin = 3;
+		int n = 0, begin = 3;
 		sinhvien* x;
-		x = (sinhvien*)malloc(sizeof(sinhvien)* 12);
-		while (!feof(fIn)){
-			i++;
-			doc(fIn, x[i - 1], begin);
-			ghifile(x[i - 1]);
+		while (!feof(fIn))
+		{
+			if (fgetwc(fIn) == L'\n')
+			{
+				n++;
+			}
+		}
+		x = (sinhvien*)malloc(sizeof(sinhvien)* n);
+		for (int i = 0; i <n;i++)
+		{
+			doc(fIn, &x[i], begin);
+			ghifile(&x[i ]);
 
 		}
 		free(x);
