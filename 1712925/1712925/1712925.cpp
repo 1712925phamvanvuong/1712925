@@ -37,59 +37,126 @@ int token(FILE* f, wchar_t h)
 void doc(FILE* fIn, sinhvien *x, int &begin);
 void doc(FILE* fIn, sinhvien *x, int &begin)
 {
+
+	int a, b;
 	fseek(fIn, begin, SEEK_SET);
-	int a = token(fIn, L',');
-	x->mssv = (wchar_t*)malloc(sizeof(wchar_t)*a);
-	fseek(fIn, begin, SEEK_SET);
-	fgetws(x->mssv, a, fIn);
-	int b = ftell(fIn);
+	if (fgetwc(fIn) != L'"'){
+		fseek(fIn, begin, SEEK_SET);
+		a = token(fIn, L',');
+		x->mssv = (wchar_t*)malloc(sizeof(wchar_t)*a);
+		fseek(fIn, begin, SEEK_SET);
+		fgetws(x->mssv, a, fIn);
+		b = ftell(fIn);
+	}
+	else{
+		fseek(fIn, begin + 1, SEEK_SET);
+		a = token(fIn, L'"');
+		x->mssv = (wchar_t*)malloc(sizeof(wchar_t)*a);
+		fseek(fIn, begin + 1, SEEK_SET);
+		fgetws(x->mssv, a, fIn);
+		b = ftell(fIn) + 1;
+	}
 	wprintf(L"%ls\n", x->mssv);
 
-
-
 	fseek(fIn, b + 1, SEEK_SET);
-	a = token(fIn, L',');
-	x->hovaten = (wchar_t*)malloc(sizeof(wchar_t)*a);
-	fseek(fIn, b + 1, SEEK_SET);
-	fgetws(x->hovaten, a, fIn);
-	b = ftell(fIn);
+	if (fgetwc(fIn) != L'"'){
+		fseek(fIn, b + 1, SEEK_SET);
+		a = token(fIn, L',');
+		x->hovaten = (wchar_t*)malloc(sizeof(wchar_t)*a);
+		fseek(fIn, b + 1, SEEK_SET);
+		fgetws(x->hovaten, a, fIn);
+		b = ftell(fIn);
+	}
+	else{
+		fseek(fIn, b + 2, SEEK_SET);
+		a = token(fIn, L'"');
+		x->hovaten = (wchar_t*)malloc(sizeof(wchar_t)*a);
+		fseek(fIn, b + 2, SEEK_SET);
+		fgetws(x->hovaten, a, fIn);
+		b = ftell(fIn) + 1;
+	}
 	wprintf(L"%ls\n", x->hovaten);
 
 
 	fseek(fIn, b + 1, SEEK_SET);
-	a = token(fIn, L',');
-	x->khoa = (wchar_t*)malloc(sizeof(wchar_t)*a);
-	fseek(fIn, b + 1, SEEK_SET);
-	fgetws(x->khoa, a, fIn);
-	b = ftell(fIn);
+	if (fgetwc(fIn) != L'"'){
+		fseek(fIn, b + 1, SEEK_SET);
+		a = token(fIn, L',');
+		x->khoa = (wchar_t*)malloc(sizeof(wchar_t)*a);
+		fseek(fIn, b + 1, SEEK_SET);
+		fgetws(x->khoa, a, fIn);
+		b = ftell(fIn);
+	}
+	else{
+		fseek(fIn, b + 2, SEEK_SET);
+		a = token(fIn, L'"');
+		x->khoa = (wchar_t*)malloc(sizeof(wchar_t)*a);
+		fseek(fIn, b + 2, SEEK_SET);
+		fgetws(x->khoa, a, fIn);
+		b = ftell(fIn) + 1;
+	}
 	wprintf(L"%ls\n", x->khoa);
 
 
 	fseek(fIn, b + 1, SEEK_SET);
-	a = token(fIn, L',');
-	x->khoc = (wchar_t*)malloc(sizeof(wchar_t)*a);
-	fseek(fIn, b + 1, SEEK_SET);
-	fgetws(x->khoc, a, fIn);
-	b = ftell(fIn);
+	if (fgetwc(fIn) != L'"'){
+		fseek(fIn, b + 1, SEEK_SET);
+		a = token(fIn, L',');
+		x->khoc = (wchar_t*)malloc(sizeof(wchar_t)*a);
+		fseek(fIn, b + 1, SEEK_SET);
+		fgetws(x->khoc, a, fIn);
+		b = ftell(fIn);
+	}
+	else{
+		fseek(fIn, b + 2, SEEK_SET);
+		a = token(fIn, L'"');
+		x->khoc = (wchar_t*)malloc(sizeof(wchar_t)*a);
+		fseek(fIn, b + 2, SEEK_SET);
+		fgetws(x->khoc, a, fIn);
+		b = ftell(fIn) + 1;
+	}
 	wprintf(L"%ls\n", x->khoc);
 
 
 	fseek(fIn, b + 1, SEEK_SET);
-	a = token(fIn, L',');
-	x->ngaysinh = (wchar_t*)malloc(sizeof(wchar_t)*a);
-	fseek(fIn, b + 1, SEEK_SET);
-	fgetws(x->ngaysinh, a, fIn);
-	b = ftell(fIn);
+	if (fgetwc(fIn) != L'"'){
+		fseek(fIn, b + 1, SEEK_SET);
+		a = token(fIn, L',');
+		x->ngaysinh = (wchar_t*)malloc(sizeof(wchar_t)*a);
+		fseek(fIn, b + 1, SEEK_SET);
+		fgetws(x->ngaysinh, a, fIn);
+		b = ftell(fIn);
+	}
+	else{
+		fseek(fIn, b + 2, SEEK_SET);
+		a = token(fIn, L'"');
+		x->ngaysinh = (wchar_t*)malloc(sizeof(wchar_t)*a);
+		fseek(fIn, b + 2, SEEK_SET);
+		fgetws(x->ngaysinh, a, fIn);
+		b = ftell(fIn) + 1;
+	}
 	wprintf(L"%ls\n", x->ngaysinh);
 
 
 	fseek(fIn, b + 1, SEEK_SET);
-	a = token(fIn, L',');
-	x->hinhcanhan = (wchar_t*)malloc(sizeof(wchar_t)*a);
-	fseek(fIn, b + 1, SEEK_SET);
-	fgetws(x->hinhcanhan, a, fIn);
-	b = ftell(fIn);
+	if (fgetwc(fIn) != L'"'){
+		fseek(fIn, b + 1, SEEK_SET);
+		a = token(fIn, L',');
+		x->hinhcanhan = (wchar_t*)malloc(sizeof(wchar_t)*a);
+		fseek(fIn, b + 1, SEEK_SET);
+		fgetws(x->hinhcanhan, a, fIn);
+		b = ftell(fIn);
+	}
+	else{
+		fseek(fIn, b + 2, SEEK_SET);
+		a = token(fIn, L'"');
+		x->hinhcanhan = (wchar_t*)malloc(sizeof(wchar_t)*a);
+		fseek(fIn, b + 2, SEEK_SET);
+		fgetws(x->hinhcanhan, a, fIn);
+		b = ftell(fIn) + 1;
+	}
 	wprintf(L"%ls\n", x->hinhcanhan);
+
 
 
 	fseek(fIn, b + 1, SEEK_SET);
@@ -242,7 +309,7 @@ void ghifile(sinhvien* x)
 		fwprintf(f, L"                              <li>Họ và tên: %ls </li>\n", x->hovaten);
 		fwprintf(f, L"								 <li>MSSV: %ls </li>\n", x->mssv);
 		fwprintf(f, L"								 <li>Sinh viên khoa: %ls </li>\n", x->khoa);
-		fwprintf(f, L"								 <li>Khóa Hoc: %ls </li>\n", x->khoc);
+		fwprintf(f, L"								 <li>Khóa Học: %ls </li>\n", x->khoc);
 		fwprintf(f, L"								 <li>Ngày sinh: %ls </li>\n", x->ngaysinh);
 		fwprintf(f, L"							 </ul>\n");
 		fwprintf(f, L"						</div>\n");
