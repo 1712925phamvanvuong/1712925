@@ -252,7 +252,7 @@ void ghifile(sinhvien* x)
 	saochepchuoi(filename, x->mssv);
 	ghepchuoi(filename, L".html");
 	FILE* f;
-	_wfopen_s(&f, filename, L"wt,ccs=UTF-8");
+	_wfopen_s(&f,filename, L"wt,ccs=UTF-8");
 	_setmode(_fileno(f), _O_U8TEXT);
 	if (f == NULL)
 	{
@@ -340,7 +340,7 @@ void ghifile(sinhvien* x)
 		fwprintf(f, L"				Ðồ án giữa kì</br>\n");
 		fwprintf(f, L"				Kĩ thuật lập trình</br>\n");
 		fwprintf(f, L"				TH2018/04</br>\n");
-		fwprintf(f, L"				1712925 - phạm văn vương</br>\n");
+		fwprintf(f, L"				1712925 - PHẠM VĂN VƯƠNG</br>\n");
 		fwprintf(f, L"				</div>\n");
 		fwprintf(f, L"			</div>\n");
 		fwprintf(f, L"			<!-- End Layout Footer -->\n");
@@ -356,7 +356,7 @@ void main()
 	_setmode(_fileno(stdout), _O_U16TEXT); //needed for output
 	_setmode(_fileno(stdin), _O_U16TEXT); //needed for input
 	FILE* fIn;
-	_wfopen_s(&fIn, L"ThongTin.csv", L"r, ccs=UTF-8");
+	_wfopen_s(&fIn, L"Sinhvien.csv", L"r, ccs=UTF-8");
 	if (fIn == NULL)
 	{
 		wprintf(L"Không mở được FILE!!!\n");
